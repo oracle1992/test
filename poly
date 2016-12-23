@@ -1,0 +1,18 @@
+OrthoToothGeom::OrthoToothGeom(const OrthoToothInput& iToothInputData)
+{
+	mToothNumber = iToothInputData.mToothNumber;
+	mpToothLandMark = iToothInputData.mpToothLandmark;
+	mspCrownData = iToothInputData.mpCrownData;
+	if (iToothInputData.mpRepairedTriangles)
+	{
+		mspCrownData->AppendPolyData(*iToothInputData.mpRepairedTriangles);
+	}
+	mspRootData = iToothInputData.mpRootData;
+	mToothType = iToothInputData.mToothType;
+	mLATData = iToothInputData.mpLATData;
+
+	GBGPolyData polyData;
+	polyData.AppendPolyData(*(mspCrownData.get()));
+	polyData.AppendPolyData(*(mspRootData.get()));
+	mspAppendedToothData = spGBGPolyData(new GBGPolyData(polyData));
+}
